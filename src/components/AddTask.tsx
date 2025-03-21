@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import Member from "./Data/Ticket";
 import {
   Box,
   Button,
@@ -7,7 +8,10 @@ import {
   Modal,
   Paper,
   Typography,
-  capitalize
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
 import { Plus } from "lucide-react";
 
@@ -19,7 +23,7 @@ const style = {
   width: 450,
   bgcolor: "white",
   boxShadow: 12,
-  borderRadius: 3, // Rounded corners
+  borderRadius: 3,
   p: 4,
 };
 
@@ -29,8 +33,8 @@ interface AddTaskProps {
     Title: string;
     Description: string;
     Type: string;
-    Assignee: string;
-    Id: string;
+    AssigneeName: string;
+    AssigneeId: string;
   }) => void;
 }
 
@@ -39,20 +43,18 @@ export default function AddTask({ id, onAddTask }: AddTaskProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [assignee, setAssignee] = useState("");
-  const [tId, setTid] = useState("");
+  const [assid, setAssid] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleAddTask = () => {
-    if (title && description && tId && assignee) {
-      
-      
-      onAddTask({ Title: title, Description: description, Type: id, Assignee: assignee.toUpperCase(), Id: tId.toUpperCase() });
+    if (title && description && assignee && assid) {
+      onAddTask({ Title: title, Description: description, Type: id, AssigneeName: assignee, AssigneeId: assid });
       setTitle("");
       setDescription("");
       setAssignee("");
-      setTid("");
+      setAssid("");
       handleClose();
     } else {
       alert("Please fill in all fields.");
@@ -78,43 +80,51 @@ export default function AddTask({ id, onAddTask }: AddTaskProps) {
           <Typography variant="h6" fontWeight={600} mb={2}>
             Add New Task
           </Typography>
-          <Box mt={3} display="flex" gap={2} flexWrap="wrap">
-              <TextField
-                label="Task ID (Ex. T21)"
-                variant="outlined"
-                value={tId}
-                onChange={(e) => setTid(e.target.value)}
-                fullWidth
-              />
-            
-              <TextField
-                label="Task Title"
-                variant="outlined"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                fullWidth
-              />
-            
-              <TextField
-                label="Task Description"
-                variant="outlined"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                multiline
-                rows={3}
-                fullWidth
-              />
-    
-              <TextField
-                label="Assignee (Ex. TM1)"
-                variant="outlined"
+          <Box mt={3} display="flex" gap={2} flexDirection="column">
+            <TextField
+              label="Task Title"
+              variant="outlined"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              fullWidth
+            />
+
+            <TextField
+              label="Task Description"
+              variant="outlined"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              multiline
+              rows={3}
+              fullWidth
+            />
+            <FormControl fullWidth>
+              <InputLabel id="assignee-select-label">Assignee</InputLabel>
+              <Select
+                labelId="assignee-select-label"
+                id="assignee-select"
                 value={assignee}
-                onChange={(e) => setAssignee(e.target.value)}
-                fullWidth
-              />
-       
-       </Box>
-          <Box mt={3} display="flex" justifyContent="center" gap={2}>
+                label="Assignee"
+                onChange={(e) => {
+                  const selectedMember = Member.find((m) => m.AssigneeName === e.target.value);
+                  if (selectedMember) {
+                    setAssignee(selectedMember.AssigneeName);
+                    setAssid(selectedMember.AssigneeId);
+                  }
+                }}
+              >
+                <MenuItem value="" disabled>
+                  Select Assignee
+                </MenuItem>
+                {Member.map((member) => (
+                  <MenuItem key={member.AssigneeId} value={member.AssigneeName}>
+                    {member.AssigneeName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
             <Button
               onClick={handleAddTask}
               variant="contained"

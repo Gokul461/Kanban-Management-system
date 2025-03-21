@@ -5,7 +5,8 @@ const Ticket = [
     "Id": "T1",
     "Title": "Website Bug",
     "Description": "Fix the issue with the homepage loading slowly.",
-    "Assignee": "TM1",
+    "AssigneeId": "TM1",
+    "AssigneeName": "Alice Johnson",
     "Type": "Backlog"
   },
   {
@@ -14,7 +15,8 @@ const Ticket = [
     "Id": "T2",
     "Title": "App Crash",
     "Description": "The mobile app crashes when trying to open a specific feature.",
-    "Assignee": "TM2",
+    "AssigneeId": "TM2",
+    "AssigneeName": "Bob Smith",
     "Type": "Review"
   },
   {
@@ -23,7 +25,8 @@ const Ticket = [
     "Id": "T3",
     "Title": "Database Slowdown",
     "Description": "Queries are taking too long to execute.",
-    "Assignee": "TM3",
+    "AssigneeId": "TM3",
+    "AssigneeName": "Charlie Davis",
     "Type": "In Progress"
   },
   {
@@ -32,7 +35,8 @@ const Ticket = [
     "Id": "T4",
     "Title": "UX Improvement",
     "Description": "Improve the navigation flow for users.",
-    "Assignee": "TM4",
+    "AssigneeId": "TM4",
+    "AssigneeName": "Diana White",
     "Type": "Done"
   },
   {
@@ -41,7 +45,8 @@ const Ticket = [
     "Id": "T5",
     "Title": "Feature Addition",
     "Description": "Add a new search feature for the product.",
-    "Assignee": "TM5",
+    "AssigneeId": "TM5",
+    "AssigneeName": "Eve Brown",
     "Type": "Review"
   },
   {
@@ -50,7 +55,8 @@ const Ticket = [
     "Id": "T6",
     "Title": "Campaign Design",
     "Description": "Design banners for the upcoming campaign.",
-    "Assignee": "TM6",
+    "AssigneeId": "TM6",
+    "AssigneeName": "Frank Miller",
     "Type": "Review"
   },
   {
@@ -59,7 +65,8 @@ const Ticket = [
     "Id": "T7",
     "Title": "Security Issue",
     "Description": "Address the vulnerability in the user login process.",
-    "Assignee": "TM7",
+    "AssigneeId": "TM7",
+    "AssigneeName": "Grace Lee",
     "Type": "Backlog"
   },
   {
@@ -68,7 +75,8 @@ const Ticket = [
     "Id": "T8",
     "Title": "Server Downtime",
     "Description": "Investigate the reason behind the server crash.",
-    "Assignee": "TM8",
+    "AssigneeId": "TM8",
+    "AssigneeName": "Hank Wilson",
     "Type": "In Progress"
   },
   {
@@ -77,7 +85,8 @@ const Ticket = [
     "Id": "T9",
     "Title": "Cloud Sync Error",
     "Description": "Data not syncing properly with the cloud server.",
-    "Assignee": "TM9",
+    "AssigneeId": "TM9",
+    "AssigneeName": "Ivy Moore",
     "Type": "Backlog"
   },
   {
@@ -86,7 +95,8 @@ const Ticket = [
     "Id": "T10",
     "Title": "Tool Integration",
     "Description": "Integrate the new automation tool into the existing workflow.",
-    "Assignee": "TM10",
+    "AssigneeId": "TM10",
+    "AssigneeName": "Jack Taylor",
     "Type": "Done"
   },
   {
@@ -95,7 +105,8 @@ const Ticket = [
     "Id": "T18",
     "Title": "Chatbot AI",
     "Description": "Improve chatbot AI response accuracy.",
-    "Assignee": "TM8",
+    "AssigneeId": "TM8",
+    "AssigneeName": "Hank Wilson",
     "Type": "In Progress"
   },
   {
@@ -104,7 +115,8 @@ const Ticket = [
     "Id": "T19",
     "Title": "Report Customization",
     "Description": "Allow users to create custom reports.",
-    "Assignee": "TM9",
+    "AssigneeId": "TM9",
+    "AssigneeName": "Ivy Moore",
     "Type": "Review"
   },
   {
@@ -113,7 +125,8 @@ const Ticket = [
     "Id": "T20",
     "Title": "Cart Abandonment",
     "Description": "Analyze and reduce cart abandonment rate.",
-    "Assignee": "TM10",
+    "AssigneeId": "TM10",
+    "AssigneeName": "Jack Taylor",
     "Type": "Backlog"
   }
 ];

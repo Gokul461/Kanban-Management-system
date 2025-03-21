@@ -25,7 +25,7 @@ const Sidebar: React.FC = () => {
         {Team.map((member: TeamMember) => (
           <div
             key={member.Id}
-            className="mb-2 flex items-center space-x-3 cursor-pointer p-3 rounded-lg border border-gray-200 shadow-sm transition-transform hover:scale-105 hover:shadow-md hover:bg-gray-100"
+            className="mb-2 flex items-center space-x-3 p-3 rounded-lg border border-gray-200 shadow-sm transition-transform hover:scale-105 hover:shadow-md hover:bg-gray-100"
           >
             <Avatar src={member.Image} alt={member.Name} sx={{ width: 36, height: 36 }} />
             <div className="text-sm">

@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea
 import { Card, CardContent, Avatar, Chip, AvatarGroup } from "@mui/material";
 import Projects from "./Data/Ticket";
 import Team from "./Data/TeamMemeber";
-import { Star } from "lucide-react";
+import { Star, Funnel } from "lucide-react";
 import AddTask from "./AddTask";
 
 interface Task {
@@ -11,7 +11,8 @@ interface Task {
   Title: string;
   Description: string;
   Type: string;
-  Assignee: string;
+  AssigneeName: string;
+  AssigneeId: string;
 }
 
 interface ColumnType {
@@ -29,6 +30,12 @@ const columns: ColumnType[] = [
 
 const Column: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>(Projects);
+  const [draggingTaskId, setDraggingTaskId] = useState<string | null>(null);
+  const [selectedAssignee, setSelectedAssignee] = useState<string>("");
+
+  const onDragStart = (result: any) => {
+    setDraggingTaskId(result.draggableId);
+  };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -53,72 +60,99 @@ const Column: React.FC = () => {
     }
   };
 
+
   const handleAdd = (newTask: Task) => {
-    setTasks([...tasks, newTask]);
+    setTasks((prevTasks) => [...prevTasks, { ...newTask, Id: crypto.randomUUID() }]);
   };
 
   return (
-    <div className="custom-scroll-container bg-gray-50">
-      <div className="flex flex-col items-start justify-start p-4 space-y-4 ms-1">
-        <h1 className="text-2xl font-bold mb-2">
-          <span className="flex items-center gap-3">Kanban Board<Star fill="yellow" size={24} /></span>
-        </h1>
-        <p className="font-medium text-gray-500">Manage and organize your tasks</p>
-        <h3 className="font-semibold">Members on Board</h3>
-        <AvatarGroup total={10}>
-          <Avatar alt="Remy Sharp" src="src/assets/avatar1.avif" />
-          <Avatar alt="Travis Howard" src="src/assets/avatar2.avif" />
-          <Avatar alt="Cindy Baker" src="src/assets/avatar6.avif" />
-          <Avatar alt="Agnes Walker" src="src/assets/avatar5.avif" />
-          <Avatar alt="Trevor Henderson" src="src/assets/avatar6.avif" />
-        </AvatarGroup>
+    <div className="overflow-hidden bg-gray-50">
+      <div className="bg-white p-4">
+        <div className="flex justify-between items-center">
+          <div className="flex flex-col justify-start">
+            <h1 className="text-3xl font-bold flex items-center gap-3">
+              Kanban Board <Star fill="yellow" size={28} />
+            </h1>
+            <p className="text-gray-500 mt-1">Manage and organize your tasks</p>
+            <h3 className="font-semibold mt-3">Members on Board</h3>
+            <AvatarGroup total={10} sx={{ mr: 12, mt: 2 }}>
+              {Team.slice(0, 5).map((member) => (
+                <Avatar key={member.Id} alt={member.Name} src={member.Image} />
+              ))}
+            </AvatarGroup>
+          </div>
+
+          <div className="flex items-center space-x-4 mr-5 mb-2 relative top-16">
+            <h3 className="font-semibold"><span className="flex flex-row justify-center items-center gap-2"><Funnel size={16}/>Filter By :</span></h3>
+            <select onChange={(e) => setSelectedAssignee(e.target.value)} className="border-1 border-gray-400 rounded-md p-2">
+              <option value="">All</option>
+              {Team.map((member) => (
+                <option key={member.Id} value={member.Name}>
+                  {member.Name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <div className="flex justify-around bg-white space-x-2 mt-2 border-t-1 pt-6 border-gray-300">
+
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <div className="flex justify-around h-[800px] bg-white space-x-2 mt-2 border-t-1 pt-6 border-gray-300">
           {columns.map((column) => (
             <Droppable droppableId={column.id} key={column.id}>
               {(provided) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className="w-72 min-h-[300px] px-5 py-4 divide-dashed border-solid md:border-dotted bg-gray-100"
+                  className="w-75 h-[490px] px-5 py-4 bg-gray-100 border border-gray-300 rounded-lg overflow-hidden"
                 >
                   <div className="flex flex-col mb-4">
                     <Chip
                       label={column.label}
                       color={column.color}
                       variant="filled"
-                      sx={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, marginBottom: "1rem" }}
+                      sx={{ fontWeight: 600, marginBottom: "1rem" }}
                     />
-                    <AddTask id={column.id} onAddTask={(newTask) => handleAdd(newTask)} />
+                    <AddTask id={column.id} onAddTask={(newTask) => handleAdd({ ...newTask, Id: crypto.randomUUID() })} />
                   </div>
-                  {tasks.filter((task) => task.Type === column.id).map((task, index) => {
-                    const assignee = Team.find((teamMember) => teamMember.Id === task.Assignee);
-                    return (
-                      <Draggable key={task.Id} draggableId={task.Id} index={index}>
-                        {(provided) => (
-                          <Card
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            className="mb-2 rounded-lg border cursor-pointer border-gray-200 shadow-sm transition-transform transform hover:scale-105 hover:shadow-md"
-                          >
-                            <CardContent>
-                              <h2 className="font-semibold text-medium">{task.Title}</h2>
-                              <p className="text-gray-600 text-xs">{task.Description}</p>
-                              {assignee && (
-                                <div className="flex items-center space-x-2 mt-2">
-                                  <Avatar src={assignee.Image} sx={{ width: 24, height: 24 }} />
-                                  <h6 className="text-gray-600 text-xs">{assignee.Name}</h6>
-                                </div>
-                              )}
-                            </CardContent>
-                          </Card>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                  {provided.placeholder}
+
+                  <div className="overflow-y-auto overflow-x-hidden h-[350px] p-1">
+                    {tasks
+                      .filter(
+                        (task) =>
+                          task.Type === column.id &&
+                          (!selectedAssignee || task.AssigneeName === selectedAssignee)
+                      )
+                      .map((task, index) => {
+                        const assignee = Team.find((member) => member.Id === task.AssigneeId);
+                        return (
+                          <Draggable key={task.Id} draggableId={task.Id} index={index}>
+                            {(provided, snapshot) => (
+                              <Card
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className={`mb-2 rounded-lg border cursor-pointer border-gray-200 shadow-sm transition-transform ${
+                                  snapshot.isDragging ? "opacity-50 scale-95" : "hover:scale-105 hover:shadow-md"
+                                }`}
+                              >
+                                <CardContent>
+                                  <h2 className="font-semibold text-medium">{task.Title}</h2>
+                                  <p className="text-gray-600 text-xs">{task.Description}</p>
+                                  {assignee && (
+                                    <div className="flex items-center space-x-2 mt-2">
+                                      <Avatar src={assignee.Image} sx={{ width: 24, height: 24 }} />
+                                      <h6 className="text-gray-600 text-xs">{assignee.Name}</h6>
+                                    </div>
+                                  )}
+                                </CardContent>
+                              </Card>
+                            )}
+                          </Draggable>
+                        );
+                      })}
+                    {provided.placeholder}
+                  </div>
                 </div>
               )}
             </Droppable>
