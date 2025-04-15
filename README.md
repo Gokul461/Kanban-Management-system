@@ -72,11 +72,7 @@ const onDragEnd = (result: DropResult) => {
 - 
 ### Screenshot of the design
 
-
-![image](https://github.com/user-attachments/assets/a0eba4fb-caa3-4d4b-ae8a-78970da36f26)
-
-## 📜 License
-This project is licensed under the MIT License.
+![image](https://github.com/user-attachments/assets/26aa4de9-707c-4f63-8446-e75f0472ff68)
 
 ---
 🚀 Happy Coding! 🎯
