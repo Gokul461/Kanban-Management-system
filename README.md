@@ -67,9 +67,6 @@ const onDragEnd = (result: DropResult) => {
 };
 ```
 
-## 🤝 Contributors
-- **Gokulnath S** 🚀 ([GitHub](https://github.com/Gokulsl))
-- 
 ### Screenshot of the design
 
 ![image](https://github.com/user-attachments/assets/26aa4de9-707c-4f63-8446-e75f0472ff68)
