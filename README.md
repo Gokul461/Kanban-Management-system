@@ -31,19 +31,6 @@ The **Kanban Board** is a task management system that helps teams organize their
 ├── 📜 README.md
 ```
 
-## 🏗️ Installation
-```sh
-# Clone the repository
-git clone https://github.com/Gokulsl/Kanban.git
-cd Kanban
-
-# Install dependencies
-yarn install  # or npm install
-
-# Start the development server
-yarn start  # or npm start
-```
-
 ## 🎯 Usage
 1. Open the app in your browser (`http://localhost:3000`).
 2. Add tasks using the **Add Task** button.
