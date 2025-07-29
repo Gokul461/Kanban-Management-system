@@ -31,9 +31,6 @@ The **Kanban Board** is a task management system that helps teams organize their
 ├── 📜 README.md
 ```
 
-## 🎨 UI Preview
-![Kanban Board Preview](https://via.placeholder.com/1000x500.png?text=Kanban+Board+UI+Preview)
-
 ## 🏗️ Installation
 ```sh
 # Clone the repository
